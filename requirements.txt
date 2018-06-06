@@ -1,0 +1,4 @@
+PyAutoGUI==0.9.36
+psutil==5.4.5
+pywinauto==0.6.4
+PyQt5==5.10.1
