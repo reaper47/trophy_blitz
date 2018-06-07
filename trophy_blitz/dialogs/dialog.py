@@ -1,4 +1,5 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
+from utils import unleash_chaos_gui
 
 class Ui_Dialog(object):
 
@@ -24,14 +25,10 @@ class Ui_Dialog(object):
         
         self.retranslateUi(Dialog)
         
-        self.buttonBox = QtWidgets.QDialogButtonBox(Dialog)
-        self.buttonBox.setOrientation(QtCore.Qt.Horizontal)
-        self.buttonBox.setStandardButtons(QtWidgets.QDialogButtonBox.Cancel|QtWidgets.QDialogButtonBox.Ok)
-        self.buttonBox.setObjectName("buttonBox")
-        self.gridlayout.addWidget(self.buttonBox, 5, 0, 1, 2)
+        self.button_box = self.add_ok_cancel_button_box(Dialog, 'button_box', 'Blitz It', 'Exit')
+        self.button_box.accepted.connect(self.blitz_it)
+        self.button_box.rejected.connect(self.exit)
         
-        self.buttonBox.accepted.connect(Dialog.accept)
-        self.buttonBox.rejected.connect(Dialog.reject)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
     def add_label(self, dialog, text):
@@ -63,6 +60,17 @@ class Ui_Dialog(object):
         self.line_number += 1
         return line_edit
         
+    def add_ok_cancel_button_box(self, dialog, object_name, ok_button_text, cancel_button_text):
+        button_box = QtWidgets.QDialogButtonBox(dialog)
+        button_box.setOrientation(QtCore.Qt.Horizontal)
+        button_box.setStandardButtons(QtWidgets.QDialogButtonBox.Cancel|QtWidgets.QDialogButtonBox.Ok)
+        button_box.button(QtWidgets.QDialogButtonBox.Ok).setText(ok_button_text)
+        button_box.button(QtWidgets.QDialogButtonBox.Cancel).setText(cancel_button_text)
+        button_box.setObjectName(object_name)
+        self.gridlayout.addWidget(button_box, self.line_number, 0, 1, 2)
+        self.line_number += 1
+        return button_box
+        
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
         Dialog.setWindowTitle(_translate("Dialog", "Trophy Blitz"))
@@ -70,3 +78,15 @@ class Ui_Dialog(object):
         self.num_refreshes.setText(_translate("Dialog", "Number of refreshes:"))
         self.interval.setText(_translate("Dialog", "Interval (min)"))
         self.browser_label.setText(_translate("Dialog", "Browser:"))
+        
+    def blitz_it(self):
+        browser = self.browser.currentText()
+        url = self.userEdit.displayText()
+        refreshes = self.num_refreshes_edit.value()
+        interval = self.interval_edit.value()
+        
+        unleash_chaos_gui(browser, url, refreshes, interval)
+    
+    def exit(self):
+        QtCore.QCoreApplication.quit()
+        
