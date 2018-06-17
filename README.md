@@ -13,9 +13,9 @@ Unfortunately, this program solely works under Windows as it searches for proces
     
     - For Python 3: `python -m pip install pyqt5 psutil pyautogui pywinauto`
     
-1. Under the `trophy_blitz` subdirectory, run `python main.py`.
+1. Under the `trophy_blitz` subdirectory, run `python main.py`. You can also double click `main.py`.
 1. Select your parameters.
-1. Press OK and let the blitzing start. If you wish to abort the operation at anytime, press the `Abort` button.
+1. Press OK and let the blitzing start. You can cancel the ongoing operation at any time by pressing the `Abort` button.
 
 
 ### Happy Blitzing :D
